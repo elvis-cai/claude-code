@@ -1,0 +1,55 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-restart-slack-operator-role
+rules:
+- apiGroups:
+  - alerts.vibe-coding.com
+  resources:
+  - slackalerts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - alerts.vibe-coding.com
+  resources:
+  - slackalerts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - alerts.vibe-coding.com
+  resources:
+  - slackalerts/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch

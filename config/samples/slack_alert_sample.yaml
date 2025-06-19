@@ -1,0 +1,33 @@
+apiVersion: alerts.vibe-coding.com/v1
+kind: SlackAlert
+metadata:
+  name: production-pod-alerts
+  namespace: default
+spec:
+  webhookUrl: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+  channel: "#alerts"
+  username: "K8s Pod Restart Bot"
+  enabled: true
+  messageTemplate: "🚨 Pod %s in namespace %s restarted due to %s: %s"
+  
+  # Optional: Only monitor specific namespaces
+  namespaceSelector:
+    matchLabels:
+      environment: "production"
+  
+  # Optional: Only monitor specific pods
+  podSelector:
+    matchLabels:
+      tier: "backend"
+---
+apiVersion: alerts.vibe-coding.com/v1
+kind: SlackAlert
+metadata:
+  name: all-namespaces-alert
+  namespace: kube-system
+spec:
+  webhookUrl: "https://hooks.slack.com/services/ANOTHER/SLACK/WEBHOOK"
+  channel: "#kubernetes-alerts"
+  username: "Pod Monitor"
+  enabled: true
+  # No selectors = monitor all pods in all namespaces
